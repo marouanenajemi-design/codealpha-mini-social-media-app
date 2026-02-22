@@ -1,0 +1,26 @@
+<div class="profile-card">
+
+  <h1><%= @user.email %></h1>
+
+  <div class="stats">
+    <div>
+      <strong><%= @user.posts.count %></strong>
+      <span>Posts</span>
+    </div>
+
+    <div>
+      <strong><%= @user.followers.count %></strong>
+      <span>Followers</span>
+    </div>
+
+    <div>
+      <strong><%= @user.following.count %></strong>
+      <span>Following</span>
+    </div>
+  </div>
+
+  <% unless current_user == @user %>
+    <%= button_to "Follow", follows_path(followed_id: @user.id), method: :post, class: "btn-primary" %>
+  <% end %>
+
+</div>
