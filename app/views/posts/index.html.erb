@@ -9,26 +9,39 @@
     <% end %>
   </div>
 
-  <% @posts.each do |post| %>
-    <div class="post-card">
+<% @posts.each do |post| %>
 
-      <div class="post-header">
-        <strong><%= post.user.email %></strong>
-      </div>
+  <div class="post-card">
 
-      <p class="post-content"><%= post.content %></p>
+    <div class="post-header">
+      <strong><%= post.user.email %></strong>
+    </div>
 
-      <div class="comments">
-        <% post.comments.each do |comment| %>
-          <p><strong><%= comment.user.email %></strong> <%= comment.content %></p>
-        <% end %>
-      </div>
+    <div class="post-content">
+      <%= post.content %>
+    </div>
 
-      <%= form_with model: [post, Comment.new], class: "comment-form" do |f| %>
-        <%= f.text_field :content, placeholder: "Write a comment...", class: "comment-input" %>
-      <% end %>
+    <!-- ✅ REACTIONS HERE -->
+
+    <div class="reaction-buttons">
+
+      <%= button_to "👍 Like",
+          post_reactions_path(post, kind: :like),
+          method: :post,
+          class: "btn-like" %>
+
+      <%= button_to "👎 Dislike",
+          post_reactions_path(post, kind: :dislike),
+          method: :post,
+          class: "btn-dislike" %>
+
+      <span class="counts">
+        👍 <%= post.reactions.like.count %>
+        👎 <%= post.reactions.dislike.count %>
+      </span>
 
     </div>
-  <% end %>
 
-</div>
+  </div>
+
+<% end %>

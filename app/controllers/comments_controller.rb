@@ -1,7 +1,21 @@
 class CommentsController < ApplicationController
+  before_action :authenticate_user!
+
   def create
-  post = Post.find(params[:post_id])
-  post.comments.create(content: params[:comment][:content], user: current_user)
-  redirect_to root_path
+    @post = Post.find(params[:post_id])
+    @comment = @post.comments.build(comment_params)
+    @comment.user = current_user
+
+    if @comment.save
+      redirect_to root_path
+    else
+      redirect_to root_path, alert: "Comment failed"
+    end
+  end
+
+  private
+
+  def comment_params
+    params.require(:comment).permit(:content)
   end
 end

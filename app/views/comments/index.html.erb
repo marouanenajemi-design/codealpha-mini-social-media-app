@@ -1,0 +1,13 @@
+<div class="reaction-buttons">
+
+  <%= button_to "👍",
+      comment_reactions_path(comment, kind: :like),
+      method: :post,
+      class: "btn-like" %>
+
+  <%= button_to "👎",
+      comment_reactions_path(comment, kind: :dislike),
+      method: :post,
+      class: "btn-dislike" %>
+
+</div>

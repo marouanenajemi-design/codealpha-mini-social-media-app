@@ -1,6 +1,14 @@
 <div class="profile-card">
 
-  <h1><%= @user.email %></h1>
+  <div class="avatar-wrapper">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.avatar, class: "avatar" %>
+    <% else %>
+      <div class="avatar-placeholder">👤</div>
+    <% end %>
+  </div>
+
+  <h1 class="profile-name"><%= @user.email %></h1>
 
   <div class="stats">
     <div>
@@ -19,8 +27,6 @@
     </div>
   </div>
 
-  <% unless current_user == @user %>
-    <%= button_to "Follow", follows_path(followed_id: @user.id), method: :post, class: "btn-primary" %>
-  <% end %>
+  <%= link_to "← Back Home", root_path, class: "btn-back" %>
 
 </div>
